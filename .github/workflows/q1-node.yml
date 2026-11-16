@@ -1,5 +1,15 @@
 name: Node
 
+on:
+  push:
+    branches:
+      - "feature/**"
+    paths:
+      - "node/src/**"
+      - "node/Dockerfile"
+      - "node/.dockerignore"
+      - "node/package.json"
+      - "node/package-lock.json"
 
 jobs:
   build:

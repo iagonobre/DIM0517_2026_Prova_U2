@@ -1,14 +1,22 @@
 name: Node
 
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - develop
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: node
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -20,3 +28,5 @@ jobs:
       - name: Check
         run: node --check src/index.js
 
+      - name: Testes unitários
+        run: npm test
